@@ -23,6 +23,7 @@ HOW TO DEPLOY (do this once):
 
 from flask import Flask, request, jsonify, Response
 from datetime import datetime
+import pytz
 from collections import deque
 import sqlite3
 import os
@@ -103,7 +104,7 @@ def receive_data():
         return jsonify({"error": "Missing fields", "required": required}), 400
 
     reading = {
-        "timestamp"    : datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "timestamp"    : datetime.now(pytz.timezone('Asia/Kuala_Lumpur')).strftime("%Y-%m-%d %H:%M:%S"),
         "sensor_a_mpa" : data["sensor_a_mbar"] / 1000.0,
         "sensor_b_mpa" : data["sensor_b_mbar"] / 1000.0,
         "delta_p_mpa"  : data["delta_p_mbar"]  / 1000.0,
